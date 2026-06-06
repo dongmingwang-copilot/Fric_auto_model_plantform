@@ -30,12 +30,11 @@ storage/                本地运行目录，仓库仅保留空目录占位
 
 ## 模型文件策略
 
-GitHub 仓库只上传初始模型：
+GitHub 仓库上传初始模型：
 
 - 已上传：`checkpoints/baseline/unet32_scratch.pt`
-- 不上传：业务 baseline、训练 run、用户微调模型、导出部署包
 
-后续训练生成的模型会写入 `checkpoints/runs/`，该目录已被 `.gitignore` 排除。
+后续训练生成的模型会写入 `checkpoints/runs/`
 
 ## 快速启动
 
