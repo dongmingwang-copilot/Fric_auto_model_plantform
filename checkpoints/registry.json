@@ -1,0 +1,12 @@
+[
+  {
+    "id": "scratch-unet32",
+    "name": "UNet-32 Scratch 初始权重",
+    "role": "foundation",
+    "model_type": "unet",
+    "path": "checkpoints/baseline/unet32_scratch.pt",
+    "threshold_default": 0.5,
+    "created_at": "2026-06-05T13:41:50.433999+00:00",
+    "readonly": true
+  }
+]

@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>模型生成 - 金属表面磨损识别平台</title>
+    <link rel="stylesheet" href="/static/styles.css?v=20260606-dataset-admin6" />
+  </head>
+  <body class="app-shell generation-mode" data-workspace="generation" data-default-checkpoint="scratch-unet32">
+    <header class="topbar">
+      <div class="brand-block">
+        <div class="product-kicker">Model Generation</div>
+        <h1>模型生成工作台</h1>
+        <span id="health" class="status-pill">启动中</span>
+      </div>
+      <div class="top-actions">
+        <label class="model-control"><span>自动装载模型</span><select id="checkpointSelect"></select></label>
+        <label class="threshold-control"><span>阈值</span><input id="threshold" type="number" min="0.01" max="0.99" step="0.01" value="0.50" /></label>
+        <button onclick="window.location.href='/'">返回首页</button>
+      </div>
+    </header>
+
+    <main class="workspace generation-workspace">
+      <aside class="sidebar">
+        <section class="panel">
+          <h2>数据集装载</h2>
+          <select id="datasetSelect"></select>
+          <div id="datasetSummary" class="dataset-summary"></div>
+          <div class="train-actions">
+            <button id="archiveDataset">数据集管理</button>
+            <button id="deleteDataset">集中维护</button>
+          </div>
+          <div id="datasetManageStatus" class="muted">项目创建、缺陷命名、标签颜色和图像导入统一在数据集管理平台维护。</div>
+        </section>
+
+        <section class="panel">
+          <h2>标签</h2>
+          <label class="label-select">
+            <span class="swatch spall"></span>
+            <select id="labelSelect">
+              <option value="new-defect" data-color="#ff9e94">New Defect</option>
+            </select>
+          </label>
+          <input id="labelIdInput" type="hidden" value="new-defect" />
+          <input id="labelNameInput" type="hidden" value="New Defect" />
+        </section>
+
+        <section class="panel list-panel">
+          <h2>Media Gallery</h2>
+          <div id="itemList" class="item-list"></div>
+        </section>
+      </aside>
+
+      <section class="viewer">
+        <div class="workflow-strip">
+          <span>1 数据集管理创建项目</span>
+          <span>2 小样本 Review</span>
+          <span>3 Scratch 训练</span>
+          <span>4 全局预测</span>
+          <span>5 多轮主动学习至基线</span>
+        </div>
+        <div class="toolbar">
+          <label>预测方式
+            <select id="predictMode">
+              <option value="single" selected>单图预测</option>
+              <option value="all">全量预测</option>
+            </select>
+          </label>
+          <button id="predictBtn">模型预测</button>
+          <button id="brushBtn" class="active">画笔</button>
+          <button id="eraseBtn">橡皮擦</button>
+          <button id="clearBtn">清空掩码</button>
+          <button id="saveBtn">保存标注</button>
+          <label>画笔大小 <input id="brushSize" type="range" min="2" max="80" value="22" /></label>
+          <div class="zoom-controls" aria-label="图像缩放">
+            <button id="zoomOut" title="缩小">-</button>
+            <span id="zoomValue">100%</span>
+            <button id="zoomIn" title="放大">+</button>
+            <button id="zoomReset" title="重置缩放">1:1</button>
+          </div>
+        </div>
+        <div class="canvas-wrap">
+          <canvas id="imageCanvas"></canvas>
+          <canvas id="maskCanvas"></canvas>
+        </div>
+        <footer class="statusline">
+          <span id="selectedStatus">未选择图像</span>
+          <span id="saveStatus"></span>
+        </footer>
+      </section>
+
+      <aside class="inspector">
+        <section class="panel">
+          <h2>主动学习</h2>
+          <div class="train-grid">
+            <label>本轮 Review 数 <input id="activeTopK" type="number" min="1" max="1000" value="12" /></label>
+            <label>预测范围 <input value="未 Review 图像" disabled /></label>
+          </div>
+          <div class="train-actions">
+            <button id="batchPredict">批量预测</button>
+            <button id="rankActive">生成 Active Set</button>
+          </div>
+          <button id="nextActive">下一张推荐图</button>
+          <div id="activeStatus" class="muted"></div>
+          <div id="activeQueue" class="active-queue"></div>
+        </section>
+
+        <section class="panel">
+          <h2>训练</h2>
+          <div class="muted">第一轮使用 UNet-32 Scratch 和已保存小样本 mask 训练；后续自动装载同类别最新生成模型继续主动学习。</div>
+          <div class="train-grid">
+            <label>轮数 <input id="trainEpochs" type="number" min="1" max="200" value="12" /></label>
+            <label>采样数 <input id="trainSamples" type="number" min="32" max="20000" value="512" /></label>
+            <label>批大小 <input id="trainBatch" type="number" min="1" max="32" value="8" /></label>
+            <label>学习率 <input id="trainLr" type="number" min="0.00001" max="0.01" step="0.00001" value="0.0002" /></label>
+          </div>
+          <div class="train-actions">
+            <button id="trainJob">训练模型</button>
+            <button id="openTraining">实时监控</button>
+          </div>
+          <button id="openTesting">模型测试</button>
+          <div id="trainStatus" class="muted"></div>
+        </section>
+
+        <section class="panel">
+          <h2>版本与导出</h2>
+          <button id="rebuildMetadata">重建元数据</button>
+          <button id="createSnapshot">创建数据版本</button>
+          <div id="snapshotStatus" class="muted"></div>
+          <div class="export-actions">
+            <button id="exportActive">导出主动学习包</button>
+            <button id="exportCoco">导出 COCO</button>
+            <button id="exportFiftyOne">生成 FiftyOne</button>
+          </div>
+          <div id="exportStatus" class="muted"></div>
+        </section>
+      </aside>
+    </main>
+
+    <script src="/static/app.js?v=20260606-dataset-admin6"></script>
+  </body>
+</html>

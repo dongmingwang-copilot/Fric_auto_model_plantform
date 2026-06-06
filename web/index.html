@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>金属表面磨损识别平台</title>
+    <link rel="stylesheet" href="/static/styles.css?v=20260606-enterprise-home3" />
+  </head>
+  <body class="home-page enterprise-home">
+    <header class="topbar home-topbar">
+      <div class="brand-block">
+        <div class="product-kicker">Active Vision Platform</div>
+        <h1>金属表面磨损识别平台</h1>
+        <span id="homeHealth" class="status-pill">同步中</span>
+      </div>
+      <nav class="home-nav" aria-label="平台模块">
+        <a href="/datasets">数据集</a>
+        <a href="/optimize">模型升级</a>
+        <a href="/generate">模型生成</a>
+        <a href="/training">训练监控</a>
+        <a href="/testing">模型测试</a>
+      </nav>
+    </header>
+
+    <main class="home-main enterprise-main">
+      <section class="ops-header">
+        <div>
+          <span class="home-eyebrow">Enterprise AI Operations</span>
+          <h2>模型资产、数据治理、主动学习、审计验证和部署准备在同一个闭环里管理。</h2>
+        </div>
+        <div class="ops-actions">
+          <a class="button-link primary" href="/datasets">新建 / 导入数据集</a>
+          <a class="button-link" href="/optimize">使用当前基线升级</a>
+        </div>
+      </section>
+
+      <section class="ops-metrics" aria-label="平台实时指标">
+        <div class="ops-metric"><span>活动数据集</span><strong id="metricDatasets">-</strong><small id="metricDatasetsHint">同步中</small></div>
+        <div class="ops-metric"><span>可用模型</span><strong id="metricModels">-</strong><small id="metricModelsHint">同步中</small></div>
+        <div class="ops-metric"><span>训练任务</span><strong id="metricJobs">-</strong><small id="metricJobsHint">同步中</small></div>
+        <div class="ops-metric"><span>归档项目</span><strong id="metricArchives">-</strong><small id="metricArchivesHint">同步中</small></div>
+      </section>
+
+      <section class="enterprise-grid">
+        <article class="panel model-command-center">
+          <div class="section-head">
+            <div>
+              <h2>模型中心</h2>
+              <p class="muted">以当前 Spall 基线为主，后续生成基线和升级模型都在这里进入闭环。</p>
+            </div>
+            <a class="text-link" href="/testing">模型验证</a>
+          </div>
+          <div id="modelCenter" class="model-stack"></div>
+        </article>
+
+        <article class="panel lifecycle-panel">
+          <div class="section-head">
+            <div>
+              <h2>生态闭环</h2>
+              <p class="muted">围绕平台工作流组织：导入、标注、训练、主动学习、优化、部署准备。</p>
+            </div>
+          </div>
+          <div class="lifecycle-steps">
+            <a href="/datasets"><strong>01</strong><span>数据治理</span><small>项目、类别、标签、图像和 GT 统一管理</small></a>
+            <a href="/generate"><strong>02</strong><span>小样本生成</span><small>新类别从 Scratch 权重开始主动学习</small></a>
+            <a href="/training"><strong>03</strong><span>训练监控</span><small>Dice / Recall / IoU / 阈值扫描统一沉淀</small></a>
+            <a href="/optimize"><strong>04</strong><span>模型升级</span><small>以同类基线预测大数据集并创建 Review 队列</small></a>
+            <a href="/testing"><strong>05</strong><span>验证发布</span><small>抽样测试、指标复核、进入部署准备</small></a>
+          </div>
+        </article>
+
+        <article class="panel">
+          <div class="section-head">
+            <div>
+              <h2>数据集治理</h2>
+              <p class="muted">按项目名称、缺陷类别、标签颜色、数量、状态、格式和最好 PT 维护。</p>
+            </div>
+            <a class="text-link" href="/datasets">进入管理</a>
+          </div>
+          <div id="datasetGovernance" class="governance-table"></div>
+        </article>
+
+        <article class="panel">
+          <div class="section-head">
+            <div>
+              <h2>验证门禁</h2>
+              <p class="muted">每次导入、预测、Review、训练、部署准备都要可追踪、可复核、可清理。</p>
+            </div>
+          </div>
+          <div id="qualityGates" class="gate-list"></div>
+        </article>
+
+        <article class="panel audit-log-panel">
+          <div class="section-head">
+            <div>
+              <h2>最近审计</h2>
+              <p class="muted">记录关键操作，支撑企业级追踪和验证后清理。</p>
+            </div>
+          </div>
+          <div id="auditEvents" class="audit-event-list"></div>
+        </article>
+      </section>
+
+      <section class="panel enterprise-audit-panel">
+        <div class="section-head">
+          <div>
+            <h2>平台闭环路线</h2>
+            <p class="muted">把本地平台拆成可执行、可审计、可清理的企业级增强项。</p>
+          </div>
+          <a class="text-link" href="/datasets">从数据集开始</a>
+        </div>
+        <div class="audit-grid">
+          <div><strong>主动学习</strong><span>已经具备预测、排序、Review、再训练循环；继续补充主动分数解释和批次审计。</span></div>
+          <div><strong>标注与 GT</strong><span>已经支持图像级最新 GT 查看；继续增强多标签、撤销历史、版本对比。</span></div>
+          <div><strong>模型优化</strong><span>已经沉淀 Dice / Recall / IoU / 阈值；继续补齐 OpenVINO / INT8 / FP16 导出链路。</span></div>
+          <div><strong>部署生态</strong><span>当前支持本地部署准备包；下一步补模型注册审批、接口文档和回滚。</span></div>
+        </div>
+      </section>
+
+      <section class="panel operation-panel">
+        <div class="section-head">
+          <div>
+            <h2>操作指令与验收</h2>
+            <p class="muted">每个入口都绑定可验证结果，测试完成后必须回到数据清洁状态。</p>
+          </div>
+        </div>
+        <div id="operationRunbook" class="runbook-grid"></div>
+      </section>
+    </main>
+
+    <script src="/static/home.js?v=20260606-enterprise-home3"></script>
+  </body>
+</html>

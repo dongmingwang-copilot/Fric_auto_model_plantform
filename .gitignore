@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.venv/
+venv/
+
+# Local runtime data
+storage/**
+!storage/
+!storage/**/
+!storage/**/.gitkeep
+*.sqlite3
+*.db
+*.log
+
+# Model artifacts
+checkpoints/**/*.pt
+!checkpoints/baseline/unet32_scratch.pt
+checkpoints/runs/
+
+# Local release packages
+release/
+
+# OS and editor noise
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

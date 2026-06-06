@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>训练实时监控 - 金属表面磨损识别平台</title>
+    <link rel="stylesheet" href="/static/styles.css?v=20260606-training-live1" />
+  </head>
+  <body class="monitor-page">
+    <header class="topbar">
+      <div>
+        <h1>训练实时监控</h1>
+        <span id="monitorHealth">同步中</span>
+      </div>
+      <div class="top-actions">
+        <button id="backHome">返回标注平台</button>
+        <button id="refreshJobs">刷新任务</button>
+      </div>
+    </header>
+
+    <main class="monitor-main">
+      <aside class="monitor-sidebar">
+        <section class="panel">
+          <h2>训练任务</h2>
+          <div id="jobList" class="job-list"></div>
+        </section>
+      </aside>
+
+      <section class="monitor-content">
+        <section class="panel">
+          <h2>实时状态</h2>
+          <div id="jobStatus" class="muted">请选择训练任务</div>
+          <div class="train-progress-track"><span id="trainProgressBar"></span></div>
+          <div class="metrics-grid">
+            <div class="metric"><span>Epoch</span><strong id="metricEpoch">-</strong></div>
+            <div class="metric"><span>Batch</span><strong id="metricBatch">-</strong></div>
+            <div class="metric"><span>Train Loss</span><strong id="metricLoss">-</strong></div>
+            <div class="metric"><span>Dice / Recall</span><strong id="metricDiceRecall">-</strong></div>
+          </div>
+          <div class="metrics-grid live-hardware-grid">
+            <div class="metric"><span>阶段</span><strong id="metricPhase">-</strong></div>
+            <div class="metric"><span>吞吐</span><strong id="metricSpeed">-</strong></div>
+            <div class="metric"><span>显存占用</span><strong id="metricGpu">-</strong></div>
+            <div class="metric"><span>模型可用</span><strong id="metricCheckpoint">-</strong></div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h2>实时曲线</h2>
+          <canvas id="metricChart" width="900" height="260"></canvas>
+        </section>
+
+        <section class="panel">
+          <h2>完成后测试图像</h2>
+          <div class="muted">训练完成后显示原图、人工 GT 和模型预测；训练中只展示实时指标。</div>
+          <div id="visualizationRows"></div>
+        </section>
+      </section>
+    </main>
+
+    <script src="/static/training.js?v=20260606-training-live1"></script>
+  </body>
+</html>

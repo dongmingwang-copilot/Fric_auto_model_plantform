@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>模型测试 - 金属表面磨损识别平台</title>
+    <link rel="stylesheet" href="/static/styles.css?v=20260606-dataset-admin3" />
+  </head>
+  <body class="monitor-page">
+    <header class="topbar">
+      <div>
+        <h1>模型测试</h1>
+        <span id="testHealth">同步中</span>
+      </div>
+      <div class="top-actions">
+        <button id="backHome">返回标注平台</button>
+        <button id="refreshTests">刷新</button>
+      </div>
+    </header>
+
+    <main class="monitor-main">
+      <aside class="monitor-sidebar">
+        <section class="panel">
+          <h2>测试配置</h2>
+          <label>数据集 <select id="datasetSelect"></select></label>
+          <label>模型 <select id="checkpointSelect"></select></label>
+          <div class="train-grid">
+            <label>随机张数 <input id="sampleCount" type="number" min="1" max="200" value="20" /></label>
+            <label>阈值 <input id="threshold" type="number" min="0.01" max="0.99" step="0.01" value="0.50" /></label>
+          </div>
+          <button id="runTest">随机测试</button>
+          <div id="testStatus" class="muted"></div>
+        </section>
+        <section class="panel">
+          <h2>历史测试</h2>
+          <div id="testList" class="job-list"></div>
+        </section>
+      </aside>
+
+      <section class="monitor-content">
+        <section class="panel">
+          <h2>测试指标</h2>
+          <div id="testSummary" class="muted">请选择或运行一次测试。</div>
+        </section>
+        <section class="panel">
+          <h2>测试图像</h2>
+          <div class="muted">每行：原图、人工 GT、差异图。红色为漏检，绿色为多检，蓝色为命中。</div>
+          <div id="testRows"></div>
+        </section>
+      </section>
+    </main>
+
+    <script src="/static/testing.js?v=20260606-dataset-admin3"></script>
+  </body>
+</html>
